@@ -1,0 +1,7 @@
+.wrapper {
+  display: grid;
+  gap: var(--space-s);
+  place-items: center;
+  text-align: center;
+  padding-bottom: var(--space-xl);
+}

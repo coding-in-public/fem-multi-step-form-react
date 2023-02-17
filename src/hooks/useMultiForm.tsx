@@ -24,7 +24,8 @@ const useMultiForm = (formSteps: number) => {
     goBackwards,
     goToSection,
     isFirstStep: currentIndex === 0,
-    isLastStep: currentIndex === formSteps - 1,
+    isLastStep: currentIndex === formSteps - 2,
+    isConfirmation: currentIndex === formSteps - 1,
   };
 };
 

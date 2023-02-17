@@ -1,11 +1,13 @@
 import { FormEvent, MouseEvent, useState } from "react";
 import reactLogo from "./assets/react.svg";
-import "./App.css";
+import styles from "./App.module.css";
 import useMultiForm from "./hooks/useMultiForm";
 import PersonalInfo from "./components/PersonalInfo";
 import SelectPlan from "./components/SelectPlan";
 import PickAddOns from "./components/PickAddOns";
 import FinishingUp from "./components/FinishingUp";
+import Confirmation from "./components/Confirmation";
+import Button from "./components/Button";
 
 export const planOptions = {
   Arcade: {
@@ -71,32 +73,35 @@ function App() {
     isFirstStep,
     isLastStep,
     goToSection,
-  } = useMultiForm(sideBar.length);
+    isConfirmation,
+  } = useMultiForm(sideBar.length + 1);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (isLastStep) return alert("congrats something");
+    // if (isLastStep) return alert("congrats something");
     goForwards();
   };
 
-  // const handleSidebarClick = (index: number) => {
-  //   console.log(index);
-  //   goToSection(index);
-  // };
   return (
-    <div className="App">
-      <div className="sidebar">
+    <div className={styles.app}>
+      <aside className={styles.sidebar}>
         {sideBar.map((item, index) => (
-          <div key={item}>
-            <div className="number">{index}</div>
-            <div>
-              <p>Step {index}</p>
-              <p>{item}</p>
+          <div key={item} className={styles.section}>
+            <div
+              className={`${styles.num} ${
+                currentIndex === index ? styles.active : ""
+              }`}
+            >
+              {index + 1}
+            </div>
+            <div className={styles.info}>
+              <p className={styles.stepNum}>Step {index + 1}</p>
+              <p className={styles.step}>{item}</p>
             </div>
           </div>
         ))}
-      </div>
-      <form onSubmit={handleSubmit}>
+      </aside>
+      <form className={styles.form} onSubmit={handleSubmit}>
         {currentIndex === 0 && (
           <PersonalInfo {...formData} updateForm={updateForm} />
         )}
@@ -109,12 +114,21 @@ function App() {
         {currentIndex === 3 && (
           <FinishingUp {...formData} updateForm={updateForm} />
         )}
-        {!isFirstStep && (
-          <button type="button" onClick={goBackwards}>
-            Go back
-          </button>
-        )}
-        <button type="submit">{isLastStep ? "Confirm" : "Next Step"}</button>
+        {currentIndex === 4 && <Confirmation />}
+        <div className={styles.steps} hidden={isConfirmation}>
+          {!isFirstStep && (
+            <Button
+              style="back"
+              text="Go back"
+              type="button"
+              onClick={goBackwards}
+            />
+          )}
+          <Button
+            style={isLastStep ? "submit" : "default"}
+            text={isLastStep ? "Confirm" : "Next Step"}
+          />
+        </div>
       </form>
     </div>
   );

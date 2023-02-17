@@ -1,70 +1,160 @@
+/* 375px */
+/* - Desktop: 1440px */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: local("Ubuntu"),
+    url("./assets/fonts/Ubuntu-Regular.ttf") format("	font/ttf");
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: local("Ubuntu"),
+    url("./assets/fonts/Ubuntu-Medium.ttf") format("truetype");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: local("Ubuntu"), url("./assets/fonts/Ubuntu-Bold.ttf") format("truetype");
+  font-weight: bold;
+}
+
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
+  /* colors */
+  --dark: 213 96% 18%;
+  --accent: 243 100% 62%;
+  --muted: 228 100% 84%;
+  --light: 206 94% 87%;
+  --warning: 354 84% 57%;
+  --neutral1: 0 0% 100%;
+  --neutral2: 231 100% 99%;
+  --neutral3: 217 100% 97%;
+  --neutral4: 229 24% 87%;
+  --neutral5: 231 11% 63%;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  /*  fonts */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-}
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  /* sizes */
+  --space-3xs: clamp(0.25rem, calc(0.23rem + 0.11vw), 0.31rem);
+  --space-2xs: clamp(0.5rem, calc(0.46rem + 0.22vw), 0.63rem);
+  --space-xs: clamp(0.75rem, calc(0.68rem + 0.33vw), 0.94rem);
+  --space-s: clamp(1rem, calc(0.91rem + 0.43vw), 1.25rem);
+  --space-m: clamp(1.5rem, calc(1.37rem + 0.65vw), 1.88rem);
+  --space-l: clamp(2rem, calc(1.83rem + 0.87vw), 2.5rem);
+  --space-xl: clamp(3rem, calc(2.74rem + 1.3vw), 3.75rem);
+  --space-2xl: clamp(4rem, calc(3.65rem + 1.74vw), 5rem);
+  --space-3xl: clamp(6rem, calc(5.48rem + 2.61vw), 7.5rem);
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  font-family: Ubuntu, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 500;
+  background-color: hsl(var(--neutral3));
+  color: hsl(var(--dark));
 }
 
-h1 {
-  font-size: 3.2em;
+/* headings */
+h2 {
+  color: hsl(var(--dark));
   line-height: 1.1;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+/* forms */
+label {
+  color: hsl(var(--dark));
+  font-size: 14px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+input {
+  font: inherit;
+  width: 100%;
+  border: 1px solid hsl(var(--neutral5));
+  border-radius: 0.3rem;
+  padding: var(--space-2xs) var(--space-xs);
+}
+
+input::placeholder {
+  color: hsl(var(--neutral5));
+}
+
+input:focus {
+  outline-width: 1px;
+  outline-color: hsl(var(--accent));
+}
+
+input:not([value=""]):not(:focus):invalid {
+  border-color: hsl(var(--warning));
+}
+
+/* buttons */
+.btn {
+  font: inherit;
+  background-color: hsl(var(--dark));
+  color: hsl(var(--neutral1));
+  border-radius: 0.3rem;
+  padding: var(--space-2xs) var(--space-s);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045),
+    box-shadow 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+.btn:focus {
+  outline-color: transparent;
+}
+
+.btn:hover {
+  opacity: 0.7;
+}
+
+.btn:focus-visible {
+  box-shadow: 0 0 0 3px hsl(var(--neutral1)), 0 0 0 6px hsl(var(--dark));
+}
+
+.btn.back {
+  --dark: transparent;
+  --neutral1: var(--neutral4);
+}
+
+.btn.back:where(:hover, :focus-visible) {
+  --neutral1: var(--dark);
+  opacity: 1;
+}
+
+.btn.back:focus-visible {
+  box-shadow: 0 0 0 3px hsl(var(--neutral1)), 0 0 0 6px hsl(var(--muted));
+}
+
+.btn.submit {
+  --dark: var(--accent);
+}
+
+/* utils */
+.muted {
+  color: hsl(var(--neutral5));
+}
+
+.accent {
+  color: hsl(var(--accent));
+}
+
+.grid-sm {
+  display: grid;
+  gap: calc(var(--space-2xs) * 0.5);
 }

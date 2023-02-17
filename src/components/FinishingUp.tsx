@@ -1,5 +1,8 @@
 import { FormItems, planOptions } from "../App";
 
+// styles
+import styles from "./FormStep.module.css";
+
 type StepProps = FormItems & {
   updateForm: (item: Partial<FormItems>) => void;
 };
@@ -34,33 +37,40 @@ const FinishingUp = ({
   }, 0);
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <h2>Finishing up</h2>
-      <p>Double-check everything looks OK before confirming.</p>
-      <div>
-        <div>
-          <div data-left>
+      <p className="muted">
+        Double-check everything looks OK before confirming.
+      </p>
+      <div className={styles.chart}>
+        <div className={styles.row}>
+          <div
+            style={{
+              display: "grid",
+            }}
+          >
             {plan} {planLength ? "(Yearly)" : "(Monthly)"}
             <button
               type="button"
+              className={styles.change}
               onClick={() => updateForm({ planLength: !planLength })}
             >
               Change
             </button>
           </div>
-          <div data-right>
+          <div>
             $
             {!planLength ? planOptions[plan].monthly : planOptions[plan].yearly}
             /{!planLength ? "mo" : "yr"}
           </div>
-          {/* <div className="line"></div> */}
         </div>
+        <div className={styles.line}></div>
         {isOnlineService && (
-          <div>
-            <div data-left>
-              <p>Online Service</p>
+          <div className={styles.row}>
+            <div>
+              <p className="muted">Online Service</p>
             </div>
-            <div data-right>
+            <div>
               $
               {!planLength
                 ? planOptions.onlineServices.monthly
@@ -70,11 +80,11 @@ const FinishingUp = ({
           </div>
         )}
         {isLargerStorage && (
-          <div>
-            <div data-left>
-              <p>Larger Storage</p>
+          <div className={styles.row}>
+            <div>
+              <p className="muted">Larger Storage</p>
             </div>
-            <div data-right>
+            <div>
               $
               {!planLength
                 ? planOptions.largerStorage.monthly
@@ -84,11 +94,11 @@ const FinishingUp = ({
           </div>
         )}
         {isCustomizableProfile && (
-          <div>
-            <div data-left>
-              <p>Customizable Profile</p>
+          <div className={styles.row}>
+            <div>
+              <p className="muted">Customizable Profile</p>
             </div>
-            <div data-right>
+            <div>
               $
               {!planLength
                 ? planOptions.customizableProfile.monthly
@@ -98,12 +108,17 @@ const FinishingUp = ({
           </div>
         )}
       </div>
-      <div>
-        <div data-left>
-          <p>Total (per year)</p>
+      <div className={styles.row}>
+        <div>
+          <p className="muted">Total (per year)</p>
         </div>
-        <div data-right>
-          ${planTotal + addOnTotal}/{!planLength ? "mo" : "yr"}
+        <div className="accent">
+          <p>
+            {" "}
+            <strong>
+              ${planTotal + addOnTotal}/{!planLength ? "mo" : "yr"}
+            </strong>
+          </p>
         </div>
       </div>
     </div>
